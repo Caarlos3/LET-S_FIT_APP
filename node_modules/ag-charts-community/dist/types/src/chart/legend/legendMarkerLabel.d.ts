@@ -1,0 +1,35 @@
+import type { FontStyle, FontWeight } from 'ag-charts-types';
+import { BBox } from '../../scene/bbox';
+import { TranslatableGroup } from '../../scene/group';
+import type { ChildNodeCounts, RenderContext } from '../../scene/node';
+import { Line } from '../../scene/shape/line';
+import type { SwitchWidget } from '../../widget/switchWidget';
+import { Marker } from '../marker/marker';
+export declare class LegendMarkerLabel extends TranslatableGroup {
+    static readonly className = "MarkerLabel";
+    private readonly symbolsGroup;
+    private readonly label;
+    private enabled;
+    constructor();
+    destroy(): void;
+    proxyButton?: SwitchWidget;
+    pageIndex: number;
+    text?: string;
+    fontStyle?: FontStyle;
+    fontWeight?: FontWeight;
+    fontSize?: number;
+    fontFamily?: string;
+    color?: string;
+    spacing: number;
+    length: number;
+    isCustomMarker: boolean;
+    readonly marker: Marker;
+    readonly line: Line;
+    setEnabled(enabled: boolean): void;
+    getTextMeasureBBox(): BBox;
+    private refreshVisibilities;
+    private layout;
+    preRender(renderCtx: RenderContext): ChildNodeCounts;
+    private layoutLabel;
+    protected computeBBox(): BBox | undefined;
+}

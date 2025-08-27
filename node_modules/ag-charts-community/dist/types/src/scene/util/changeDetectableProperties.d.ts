@@ -1,0 +1,11 @@
+import { BaseProperties } from '../../util/properties';
+export declare class ChangeDetectableProperties extends BaseProperties {
+    protected _dirty: boolean;
+    protected markDirty(): void;
+    markClean(_opts?: {
+        force?: boolean;
+        recursive?: boolean;
+    }): void;
+    isDirty(): boolean;
+    onChangeDetection(_property: string): void;
+}

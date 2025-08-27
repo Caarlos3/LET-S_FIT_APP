@@ -1,0 +1,18 @@
+import { type OptionsDefs } from 'ag-charts-core';
+import type { AgAnnotationsOptions, AgCalloutAnnotationStyles, AgChannelAnnotationStyles, AgChannelAnnotationTextStyles, AgCommentAnnotationStyles, AgCrossLineAnnotationStyles, AgDisjointChannelAnnotationStyles, AgFibonacciAnnotationStyles, AgLineAnnotationStyles, AgLineAnnotationTextStyles, AgMeasurerAnnotationStyles, AgNoteAnnotationStyles, AgParallelChannelAnnotationStyles, AgQuickMeasurerAnnotationStyles, AgShapeAnnotationStyles, AgTextAnnotationStyles } from 'ag-charts-types';
+export declare const annotationTextStylesDef: OptionsDefs<AgTextAnnotationStyles>;
+export declare const annotationLineTextDefs: OptionsDefs<AgLineAnnotationTextStyles>;
+export declare const annotationChannelTextDefs: OptionsDefs<AgChannelAnnotationTextStyles>;
+export declare const annotationLineStyleDefs: OptionsDefs<AgLineAnnotationStyles>;
+export declare const annotationCrossLineStyleDefs: OptionsDefs<AgCrossLineAnnotationStyles>;
+export declare const annotationChannelStyleDefs: OptionsDefs<AgChannelAnnotationStyles>;
+export declare const annotationDisjointChannelStyleDefs: OptionsDefs<AgDisjointChannelAnnotationStyles>;
+export declare const annotationParallelChannelStyleDefs: OptionsDefs<AgParallelChannelAnnotationStyles>;
+export declare const annotationFibonacciStylesDefs: OptionsDefs<AgFibonacciAnnotationStyles>;
+export declare const annotationCalloutStylesDefs: OptionsDefs<AgCalloutAnnotationStyles>;
+export declare const annotationCommentStylesDefs: OptionsDefs<AgCommentAnnotationStyles>;
+export declare const annotationNoteStylesDefs: OptionsDefs<AgNoteAnnotationStyles>;
+export declare const annotationShapeStylesDefs: OptionsDefs<AgShapeAnnotationStyles>;
+export declare const annotationMeasurerStylesDefs: OptionsDefs<AgMeasurerAnnotationStyles>;
+export declare const annotationQuickMeasurerStylesDefs: OptionsDefs<AgQuickMeasurerAnnotationStyles>;
+export declare const annotationOptionsDef: OptionsDefs<AgAnnotationsOptions>;

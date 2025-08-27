@@ -1,0 +1,25 @@
+import { type OptionsDefs, type Validator } from 'ag-charts-core';
+import type { AgAxisBaseIntervalOptions, AgAxisDiscreteTimeIntervalOptions, AgBandHighlightOptions, AgBaseAxisLabelOptions, AgBaseAxisOptions, AgBaseCartesianAxisLabelOptions, AgBaseCartesianAxisOptions, AgBaseCrossLineLabelOptions, AgBaseCrossLineOptions, AgBaseCrosshairLabel, AgCartesianAxisLabelOptions, AgCartesianCrossLineOptions, AgContinuousAxisOptions, AgCrosshairLabel, AgCrosshairOptions, AgTimeAxisFormattableLabelFormat, AgTimeAxisParentLevel } from 'ag-charts-types';
+export declare const timeIntervalUnit: Validator;
+export declare const timeInterval: Validator;
+export declare const commonCrossLineLabelOptionsDefs: OptionsDefs<AgBaseCrossLineLabelOptions>;
+export declare const commonCrossLineOptionsDefs: OptionsDefs<AgBaseCrossLineOptions<AgBaseCrossLineLabelOptions>>;
+export declare const cartesianCrossLineOptionsDefs: OptionsDefs<AgCartesianCrossLineOptions>;
+type UndocumentedAgBaseAxisLabelOptions = {
+    itemStyler?: unknown;
+};
+export declare const commonAxisLabelOptionsDefs: OptionsDefs<AgBaseAxisLabelOptions & UndocumentedAgBaseAxisLabelOptions>;
+export declare const cartesianAxisLabelOptionsDefs: OptionsDefs<AgBaseCartesianAxisLabelOptions>;
+export declare const cartesianNumericAxisLabel: OptionsDefs<AgCartesianAxisLabelOptions>;
+export declare const cartesianTimeAxisLabel: OptionsDefs<AgCartesianAxisLabelOptions>;
+export declare const cartesianTimeAxisParentLevel: OptionsDefs<AgTimeAxisParentLevel>;
+export declare const commonAxisIntervalOptionsDefs: OptionsDefs<AgAxisBaseIntervalOptions>;
+export declare const commonAxisOptionsDefs: OptionsDefs<Omit<AgBaseAxisOptions<AgBaseAxisLabelOptions, unknown>, 'type'>>;
+export declare const cartesianAxisOptionsDefs: OptionsDefs<Omit<AgBaseCartesianAxisOptions<any>, 'type' | 'label' | 'primaryLabel' | 'crosshair'>>;
+export declare const cartesianAxisBandHighlightOptions: OptionsDefs<AgBandHighlightOptions>;
+export declare function cartesianAxisCrosshairOptions(): OptionsDefs<AgCrosshairOptions<AgBaseCrosshairLabel>>;
+export declare function cartesianAxisCrosshairOptions(canFormat: true): OptionsDefs<AgCrosshairOptions<AgCrosshairLabel<string>>>;
+export declare function cartesianAxisCrosshairOptions(canFormat: true, timeFormat: true): OptionsDefs<AgCrosshairOptions<AgCrosshairLabel<AgTimeAxisFormattableLabelFormat>>>;
+export declare function continuousAxisOptions(validDatum: Validator, supportTimeInterval?: boolean): OptionsDefs<AgContinuousAxisOptions>;
+export declare const discreteTimeAxisIntervalOptionsDefs: OptionsDefs<AgAxisDiscreteTimeIntervalOptions>;
+export {};
