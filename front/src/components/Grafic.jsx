@@ -45,7 +45,7 @@ export default function Grafic() {
   };
 
   return (
-    <div>
+    <div style={{ display: 'flex', alignItems:'center', paddingLeft:'100px', paddingRight: '100px', paddingTop:'50px'}}>
 
       <div
         style={{
@@ -55,6 +55,7 @@ export default function Grafic() {
             borderRadius: "8px",
             padding: "10px",
             boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+            
             
         }}
       >
@@ -69,15 +70,16 @@ export default function Grafic() {
             <Tooltip
               formatter={(value) => [`${value} min`, "Tiempo"]}
             />
-            <Bar dataKey="minutos" fill="#8884d8" />
+            <Bar dataKey="minutos" fill="#6BC9FF" />
           </BarChart>
         </ResponsiveContainer>
         <form onSubmit={añadirTiempo}
           style={{
             display: "flex",
-            justifyContent: "space-around",
+            justifyContent: "center",
             alignItems: "center",
             marginTop: "20px",
+            gap: "10px",
           }}>
           {/* Select de día */}
           <select
@@ -104,8 +106,8 @@ export default function Grafic() {
           </select>
   
           {/* Botones */}
-          <button type="submit">Añadir</button>
-          <button type="button" onClick={reset}>
+          <button style={{borderRadius: '20px', backgroundColor: '#6BC9FF',boxShadow:'3px 3px 0 0'}} type="submit">Añadir</button>
+          <button style={{borderRadius: '20px', backgroundColor: '#6BC9FF', boxShadow: '3px 3px 0 0'}} type="button" onClick={reset}>
             Reset
           </button>
         </form>
