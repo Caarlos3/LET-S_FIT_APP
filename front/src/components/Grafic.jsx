@@ -1,117 +1,131 @@
-import React, { useState } from "react";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
-
-const DIAS = [
-  "L",
-  "M",
-  "X",
-  "J",
-  "V",
-  "S",
-  "D",
-];
-const TIEMPO = [30, 40, 50, 60, 70, 80, 90, 100, 110, 120];
+import React, { useState, useEffect, useRef } from "react";
+import * as echarts from "echarts";
 
 
 
-export default function Grafic() {
-  const [data, setData] = useState(DIAS.map((dia) => ({ dia, minutos: 0 })));
+function weekRecord(week, year) {
+  const simple = new Date(year, 0, 1 + (week - 1) * 7);
+  const weekDay = simple.getDay();
 
-  const [diaSelected, setDiaSelected] = useState(DIAS[0]);
-  const [minutosSelected, setMinutosSelected] = useState(TIEMPO[0]);
+  let ISOweekStart = new Date(simple);
+  if (weekDay <= 4){
+    ISOweekStart.setDate(simple.getDate() - simple.getDay() + 1);
+  }
+  else{
+    ISOweekStart.setDate(simple.getDate() + 8 - simple.getDay());
+  }
 
-  const añadirTiempo = (e) => {
-    e.preventDefault();
 
-    setData((prevData) =>
-      prevData.map((item) =>
-        item.dia === diaSelected
-          ? { ...item, minutos: item.minutos + minutosSelected }
-          : item
-      )
-    );
+  const ISOweekEnd = new Date(ISOweekStart);
+  ISOweekEnd.setDate(ISOweekStart.getDate() + 6);
+
+  return {
+    start: ISOweekStart.toISOString().split("T")[0],
+    end: ISOweekEnd.toISOString().split("T")[0],
   };
-
-  const reset = () => {
-    setData(DIAS.map((dia) => ({ dia, minutos: 0 })));
-  };
-
-  return (
-    <div style={{ display: 'flex', alignItems:'center', paddingLeft:'100px', paddingRight: '100px', paddingTop:'50px'}}>
-
-      <div
-        style={{
-            width: "100%",
-            height: "200px",
-            backgroundColor: "white",
-            borderRadius: "8px",
-            padding: "10px",
-            boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-            
-            
-        }}
-      >
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            data={data}
-            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="dia" />
-           
-            <Tooltip
-              formatter={(value) => [`${value} min`, "Tiempo"]}
-            />
-            <Bar dataKey="minutos" fill="#6BC9FF" />
-          </BarChart>
-        </ResponsiveContainer>
-        <form onSubmit={añadirTiempo}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: "20px",
-            gap: "10px",
-          }}>
-          {/* Select de día */}
-          <select
-            value={diaSelected}
-            onChange={(e) => setDiaSelected(e.target.value)}
-          >
-            {DIAS.map((dia) => (
-              <option key={dia} value={dia}>
-                {dia}
-              </option>
-            ))}
-          </select>
-  
-          {/* Select de tiempo */}
-          <select
-            value={minutosSelected}
-            onChange={(e) => setMinutosSelected(parseInt(e.target.value))}
-          >
-            {TIEMPO.map((tiempo) => (
-              <option key={tiempo} value={tiempo}>
-                {tiempo} min
-              </option>
-            ))}
-          </select>
-  
-          {/* Botones */}
-          <button style={{borderRadius: '20px', backgroundColor: '#6BC9FF',boxShadow:'3px 3px 0 0'}} type="submit">Añadir</button>
-          <button style={{borderRadius: '20px', backgroundColor: '#6BC9FF', boxShadow: '3px 3px 0 0'}} type="button" onClick={reset}>
-            Reset
-          </button>
-        </form>
-      </div>
-    </div>
-  );
 }
+
+function GymWeek() {
+
+const [year, setYear] = useState(new Date().getFullYear());
+const [week, setWeek] = useState(3);
+const [actualWeek, setActualWeek] = useState(
+  weekRecord(3, new Date().getFullYear())
+);
+const [weekData, setWeekData] = useState([0, 0, 0, 0, 0, 0, 0]);
+
+const chartRef = useRef(null);
+const chartControl = useRef(null);
+
+const days = ["L", "M", "X", "J", "V", "S", "D"];
+const daysName = [
+  "Lunes",
+  "Martes",
+  "Miércoles",
+  "Jueves",
+  "Viernes",
+  "Sábado",
+  "Domingo",
+];
+
+useEffect(() => {
+  setActualWeek(weekRecord(week, year));
+}, [week, year]);
+
+useEffect(() => {
+  if (chartRef.current) {
+    chartControl.current = echarts.init(chartRef.current, "dark");
+    updateChart();
+  }
+}, []);
+
+useEffect(() => {
+  updateChart();
+}, [weekData, actualWeek]);
+
+const updateChart = () => {
+  if (!chartControl.current) return;
+  const totalMinutes = weekData.reduce((a, b) => a + b, 0);
+  const option = {
+    title: {
+      text: `Semana ${week} (${actualWeek.start} al ${actualWeek.end})`,
+      subtext: `Total: ${totalMinutes} min`,
+      textStyle: { color: "#fff" },
+    },
+    xAxis: { type: "category", data: daysName },
+    yAxis: { type: "value" },
+    series: [{ data: weekData, type: "bar" }],
+  };
+  chartControl.current.setOption(option);
+
+};
+
+const handleInputChange = (i, value) => {
+  const newData = [...weekData];
+  newData[i] = parseInt(value) || 0;
+  setWeekData(newData);
+};
+
+return (
+  <div>
+    <h2>REGISTRO SEMANAL</h2>
+
+    {/* Selector de año */}
+
+    <div>
+      <label htmlFor="">Año:</label>
+      <input type="number" value={year} onChange={(e) => setYear(parseInt(e.target.value))} />
+      <label htmlFor="">Semana:</label>
+      <input type="number" value={week} onChange={(e) => setWeek(parseInt(e.target.value))} min="1" max="53" />
+
+    </div>
+
+    <h3>
+      Semana {week}: {actualWeek.start} al {actualWeek.end}
+    </h3>
+
+    {/* Inputs diarios*/}
+    <div>
+    {daysName.map((dayName, i) => (
+    <div key={i}>
+      <label>{days[i]}:</label>
+      <input
+        type="number"
+        value={weekData[i] || ""}
+        onChange={(e) => handleInputChange(i, e.target.value)}
+      />
+    </div>
+  ))}
+    </div>
+
+    {/* Gráfica */}
+    <div
+    ref={chartRef}
+    style={{width: "100%", height:"300px", border: "1px solid black"}}
+    >
+    </div>
+  </div>
+);
+};
+
+export default GymWeek;

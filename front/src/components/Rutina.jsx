@@ -9,7 +9,7 @@ export default function Rutina() {
   const [error, setError] = React.useState("");
   const [success, setSuccess] = React.useState("");
   const [routines, setRoutines] = React.useState([]);
-  const [mostrar, setMostrar] = React.useState(true); // CORREGIDO
+  const [mostrar, setMostrar] = React.useState(true);
 
   const apiUrl = "http://localhost:5001";
 
@@ -86,7 +86,7 @@ export default function Rutina() {
         return;
       }
 
-      // Validaciones: name, sets, reps obligatorios; weight opcional
+    
       for (const ex of nonEmpty) {
         if (!ex.name.trim()) {
           setError("Todos los ejercicios deben tener nombre");
@@ -145,7 +145,7 @@ export default function Rutina() {
     }
   };
 
-  // Acepta objeto rutina para coincidir con el onClick
+  
   const deleteRoutine = async (routine) => {
     if (!window.confirm(`¿Eliminar la rutina "${routine.name}"?`)) return;
     try {
