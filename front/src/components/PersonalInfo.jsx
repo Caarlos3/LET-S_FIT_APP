@@ -52,10 +52,11 @@ export default function PersonalInfo() {
         textAlign: "center"
       }}>
         <h2>Información Personal</h2>
-        <div style={{ marginBottom: "10px" }}>
+        <div style={{ marginBottom: "10px", display: "flex", justifyContent: "space-between" }}>
           <label>Peso (kg): </label>
           {editable ? (
             <input
+              style={{ width: "60px", marginLeft: "10px" }}
               type="number"
               value={datosEdicion.peso}
               onChange={(e) => handleChange("peso", e.target.value)}
@@ -64,10 +65,11 @@ export default function PersonalInfo() {
             <span>{datos.peso}</span>
           )}
         </div>
-        <div style={{ marginBottom: "10px" }}>
+        <div style={{ marginBottom: "10px", display: "flex", justifyContent: "space-between" }}>
           <label>Altura (cm): </label>
           {editable ? (
             <input
+              style={{ width: "60px", marginLeft: "10px" }}
               type="number"
               value={datosEdicion.altura}
               onChange={(e) => handleChange("altura", e.target.value)}
@@ -76,10 +78,11 @@ export default function PersonalInfo() {
             <span> {datos.altura}</span>
           )}
         </div>
-        <div style={{ marginBottom: "10px" }}>
+        <div style={{ marginBottom: "10px", display: "flex", justifyContent: "space-between" }}>
           <label>Edad: </label>
           {editable ? (
             <input
+              style={{ width: "60px", marginLeft: "10px" }}
               type="number"
               value={datosEdicion.edad}
               onChange={(e) => handleChange("edad", e.target.value)}

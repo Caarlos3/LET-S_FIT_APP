@@ -88,10 +88,9 @@ function GymWeek() {
       <div
         style={{
           display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
           flexDirection: "column",
-          width: "300px",
+          justifyContent: "center",
+          
           backgroundColor: "white",
           borderRadius: "8px",
           padding: "20px",
@@ -127,19 +126,13 @@ function GymWeek() {
 
         {/* Inputs diarios*/}
         <div 
-          style={{
-            display: "flex", 
-            justifyContent: "center",
-            alignItems: "center", 
-            marginBottom: "20px",
-            flexWrap: "wrap"
-          }}
+          style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}
         >
           {daysName.map((dayName, i) => (
             <div key={i}>
               <label>{days[i]}:</label>
               <input
-                style={{ width: "50px", margin: "5px" }}
+                style={{ width: "40px", margin: "5px" }}
                 type="number"
                 value={weekData[i] || ""}
                 onChange={(e) => handleInputChange(i, e.target.value)}
