@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "id": 1,
+    "name": "Iniciación",
+    "exercises": [
+      {
+        "name": "carrera",
+        "sets": 1,
+        "reps": 20,
+        "weight": 0
+      },
+      {
+        "name": "Abd",
+        "sets": 4,
+        "reps": 30,
+        "weight": 0
+      }
+    ],
+    "createdAt": "2025-10-15T16:18:18.257082",
+    "updatedAt": "2025-10-15T16:18:18.257098"
+  }
+]
