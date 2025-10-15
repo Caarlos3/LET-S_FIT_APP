@@ -9,6 +9,67 @@ app = Flask(__name__)
 CORS(app)
 
 DATA_FILE = "routines.json"
+PERSONAL_INFO_FILE = "personal_info.json"
+
+def load_personal_info():
+    if os.path.exists(PERSONAL_INFO_FILE):
+        try:
+          with open(PERSONAL_INFO_FILE, "r") as file:
+            return json.load(file)
+        except:
+           return {}
+        
+    return {}
+
+def save_personal_info(info):
+    try:
+      with open(PERSONAL_INFO_FILE, "w") as file:
+        json.dump(info, file, indent=2,  ensure_ascii=False)
+        return True
+    except:
+       return False
+
+@app.route("/personal_info", methods=["GET"])
+def get_personal_info():
+    info = load_personal_info()
+    return jsonify(info),200
+
+@app.route("/personal_info", methods=["POST"])
+def save_personal_info_route():
+    data = request.get_json()
+
+    if not data:
+        return jsonify({"err": "No se ha enviado ningun dato"}), 400
+    
+
+    edad = data.get("edad")
+    peso = data.get("peso")
+    altura = data.get("altura")
+
+    
+    if not isinstance(edad, int) or edad <= 0:
+        return jsonify({"err": "La edad debe ser un numero entero positivo"}), 400
+    
+    if not isinstance(peso, (int, float)) or peso <= 0:
+        return jsonify({"err": "El peso debe ser un numero positivo"}), 400
+    
+    if not isinstance(altura, (int, float)) or altura <= 0:
+        return jsonify({"err": "La altura debe ser un numero positivo"}), 400
+    
+    new_info = {
+        "edad": edad,
+        "peso": peso,
+        "altura": altura,
+        "updatedAt": datetime.now().isoformat()
+    }
+
+    if  save_personal_info(new_info):
+        return jsonify(new_info), 201
+    else:
+        return jsonify({"err": "No se ha podido guardar la informacion personal"}), 500
+
+
+
 
 def load_routines():
     if os.path.exists(DATA_FILE):

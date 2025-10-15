@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as echarts from "echarts";
-import { div } from "framer-motion/client";
+
 
 function weekRecord(week, year) {
   const simple = new Date(year, 0, 1 + (week - 1) * 7);
@@ -90,7 +90,6 @@ function GymWeek() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          
           backgroundColor: "white",
           borderRadius: "8px",
           padding: "20px",
@@ -103,9 +102,9 @@ function GymWeek() {
         {/* Selector de año */}
 
         <div style={{ marginBottom: "10px" }}>
-          <label htmlFor="" >Año:</label>
+          <label htmlFor="">Año:</label>
           <input
-            style={{width:"60px", marginRight:"10px"}}
+            style={{ width: "60px", marginRight: "10px" }}
             type="number"
             value={year}
             onChange={(e) => setYear(parseInt(e.target.value))}
@@ -125,8 +124,12 @@ function GymWeek() {
         </h6>
 
         {/* Inputs diarios*/}
-        <div 
-          style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            flexWrap: "wrap",
+          }}
         >
           {daysName.map((dayName, i) => (
             <div key={i}>
