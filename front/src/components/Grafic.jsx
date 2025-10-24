@@ -87,7 +87,7 @@ function GymWeek() {
         {
           data: weekData,
           type: "bar",
-          itemStyle: { color: "black" },
+          itemStyle: { color: "rgb(107, 201, 255)" },
           label: { show: true, position: "top" },
         },
       ],
