@@ -10,6 +10,141 @@ CORS(app)
 
 DATA_FILE = "routines.json"
 PERSONAL_INFO_FILE = "personal_info.json"
+GYM_WEEKS_FILE = "gym_weeks.json"
+
+
+def load_gym_weeks():
+    if os.path.exists(GYM_WEEKS_FILE):
+        try:
+            with open(GYM_WEEKS_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f)
+             
+                if isinstance(data, list):
+                    return data
+                else:
+                    return []
+        except Exception:
+            return []
+    return []
+
+def save_gym_weeks(weeks):
+    try:
+        with open(GYM_WEEKS_FILE, "w", encoding="utf-8") as f:
+            json.dump(weeks, f, indent=2, ensure_ascii=False)
+        return True
+    except Exception:
+        return False
+
+def validate_week_payload(data):
+    if not data:
+        return "No se ha enviado ningún dato"
+
+    year = data.get("year")
+    week = data.get("week")
+    start = data.get("start")
+    end = data.get("end")
+    arr = data.get("data")
+
+    if not isinstance(year, int) or year <= 0:
+        return "El año debe ser un número entero positivo"
+    if not isinstance(week, int) or not (1 <= week <= 53):
+        return "La semana debe estar entre 1 y 53"
+    if not isinstance(start, str) or not isinstance(end, str):
+        return "start y end deben ser strings con formato YYYY-MM-DD"
+    if not isinstance(arr, list) or len(arr) != 7 or not all(isinstance(x, (int, float)) and x >= 0 for x in arr):
+        return "data debe ser un arreglo de 7 números no negativos"
+
+    try:
+        datetime.fromisoformat(start)
+        datetime.fromisoformat(end)
+    except Exception:
+        return "start/end deben tener formato ISO válido (YYYY-MM-DD)"
+
+    return None
+
+
+@app.route("/gym/weeks", methods=["POST"])
+def upsert_gym_week():
+    data = request.get_json()
+    error = validate_week_payload(data)
+    if error:
+        return jsonify({"err": error}), 400
+
+    year = data["year"]
+    week = data["week"]
+    start = data["start"]
+    end = data["end"]
+    arr = data["data"]
+
+    total_minutes = int(sum(arr))
+
+    weeks = load_gym_weeks()
+    idx = next((i for i, w in enumerate(weeks) if w["year"] == year and w["week"] == week), None)
+
+    record = {
+        "year": year,
+        "week": week,
+        "start": start,
+        "end": end,
+        "data": arr,
+        "total_minutes": total_minutes,
+        "updatedAt": datetime.now().isoformat()
+    }
+
+    if idx is None:
+        record["createdAt"] = record["updatedAt"]
+        weeks.append(record)
+    else:
+        record["createdAt"] = weeks[idx].get("createdAt", datetime.now().isoformat())
+        weeks[idx] = record
+
+    if save_gym_weeks(weeks):
+        return jsonify(record), 201
+    else:
+        return jsonify({"err": "No se ha podido guardar el registro semanal"}), 500
+
+
+@app.route("/gym/weeks", methods=["GET"])
+def list_gym_weeks():
+    year = request.args.get("year", type=int)
+    week = request.args.get("week", type=int)
+
+    weeks = load_gym_weeks()
+
+    if year is not None and week is not None:
+        found = next((w for w in weeks if w["year"] == year and w["week"] == week), None)
+        return jsonify([found] if found else []), 200
+
+    if year is not None:
+        filt = [w for w in weeks if w["year"] == year]
+        filt.sort(key=lambda x: x["week"])
+        return jsonify(filt), 200
+
+    weeks.sort(key=lambda x: (x["year"], x["week"]), reverse=True)
+    return jsonify(weeks), 200
+
+
+@app.route("/gym/weeks/<int:year>/<int:week>", methods=["GET"])
+def get_gym_week(year, week):
+    weeks = load_gym_weeks()
+    found = next((w for w in weeks if w["year"] == year and w["week"] == week), None)
+    if not found:
+        return jsonify({"err": "Registro no encontrado"}), 404
+    return jsonify(found), 200
+
+@app.route("/gym/weeks/<int:year>/<int:week>", methods=["DELETE"])
+def delete_gym_week(year, week):
+    weeks = load_gym_weeks()
+    exists = any(w for w in weeks if w["year"] == year and w["week"] == week)
+    if not exists:
+        return jsonify({"err": "Registro no encontrado"}), 404
+    weeks = [w for w in weeks if not (w["year"] == year and w["week"] == week)]
+    if save_gym_weeks(weeks):
+        return jsonify({"message": "Registro eliminado correctamente"}), 200
+    else:
+        return jsonify({"err": "No se ha podido eliminar el registro"}), 500
+
+
 
 def load_personal_info():
     if os.path.exists(PERSONAL_INFO_FILE):
