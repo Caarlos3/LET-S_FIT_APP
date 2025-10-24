@@ -5,7 +5,7 @@ export default function Navbar() {
   return (
     <nav
       style={{
-        height: "40px",
+        height: "60px",
         width: "100%",
         backgroundColor: "black",
         color: "white",
@@ -17,9 +17,10 @@ export default function Navbar() {
           justifyContent: "center",
           alignItems: "center",
           height: "100%",
+          fontFamily: "futura",
         }}
       >
-        <h1>Let's Fit App</h1>
+        <h1><i class="fa-solid fa-person-running"></i>LET'S FIT!</h1>
       </nav>
     </nav>
   );
