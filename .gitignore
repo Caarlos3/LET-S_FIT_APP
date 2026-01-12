@@ -1,15 +1,18 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
 
 # dependencies
 /node_modules
 /.pnp
 .pnp.js
+front/node_modules
 
 # testing
 /coverage
 
 # production
 /build
+front/build
+dist/
 
 # misc
 .DS_Store
@@ -22,6 +25,20 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Environment variables
+# Environment variables (IMPORTANTE)
 .env
 .env.*
+*.env
+
+# Python (Backend)
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+*.db
+*.sqlite3
+
+# IDE
+.vscode/
+.idea/
