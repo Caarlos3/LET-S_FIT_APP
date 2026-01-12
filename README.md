@@ -1,5 +1,7 @@
 # 🏋️‍♂️ LET'S FIT APP
 
+![CI - Frontend Tests](https://github.com/Caarlos3/LET-S_FIT_APP/actions/workflows/ci.yml/badge.svg)
+
 Aplicación Full Stack para el seguimiento de entrenamientos y sugerencia de ejercicios personalizados mediante Inteligencia Artificial.
 
 ## 🌐 Demo en Vivo
