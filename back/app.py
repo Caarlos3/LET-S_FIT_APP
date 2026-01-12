@@ -3,10 +3,14 @@ from flask_cors import CORS
 from datetime import datetime
 import json
 import os
+from dotenv import load_dotenv
 
 
 app = Flask(__name__)
 CORS(app)
+load_dotenv()
+
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 DATA_FILE = "routines.json"
 PERSONAL_INFO_FILE = "personal_info.json"
@@ -300,6 +304,31 @@ def delete_routine(routine_id):
         return jsonify({"message": "Rutina eliminada correctamente"}), 200
     else:
         return jsonify({"err": "No se ha podido eliminar la rutina"}), 500
+    
+
+
+@app.route("/openai", methods=["POST"])
+def ask_gpt():
+    from openai import OpenAI
+    client = OpenAI(api_key=OPENAI_API_KEY)
+
+    data = request.get_json()
+    user_message = data.get("message")
+
+    if not user_message:
+        return jsonify({"err": "No se ha enviado ningun mensaje"}), 400
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "Eres un preparador fisico experto que ayuda a las personas a aconsejar ejercicios fisico efectivos y seguras."},
+                {"role": "user", "content": user_message}
+            ]
+        )
+        answer = response.choices[0].message.content
+    except Exception as e:
+        return jsonify({"err": f"Error al comunicarse con OpenAI: {str(e)}"}), 500
+    return jsonify({"answer": answer}), 200
 
 
 if __name__ == "__main__":
