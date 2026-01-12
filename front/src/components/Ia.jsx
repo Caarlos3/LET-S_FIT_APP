@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 
-// Si usas CRA, puedes usar process.env.REACT_APP_API_BASE
-// Si usas Vite, usa import.meta.env.VITE_API_BASE
 const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:5001";
 
 function Ia() {
