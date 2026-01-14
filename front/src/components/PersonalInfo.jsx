@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const API_URL = "http://localhost:5001";
+const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:5001";
 
 export default function PersonalInfo() {
   const [datos, setDatos] = useState({
@@ -20,7 +20,7 @@ export default function PersonalInfo() {
 
   // Cargar datos guardados al montar
   useEffect(() => {
-    fetch(`${API_URL}/personal_info`)
+    fetch(`${API_BASE}/personal_info`)
       .then((res) => res.json())
       .then((data) => {
         if (data && (data.peso || data.altura || data.edad)) {
@@ -45,7 +45,7 @@ export default function PersonalInfo() {
 
   const guardarCambios = async () => {
     try {
-      const response = await fetch(`${API_URL}/personal_info`, {
+      const response = await fetch(`${API_BASE}/personal_info`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
