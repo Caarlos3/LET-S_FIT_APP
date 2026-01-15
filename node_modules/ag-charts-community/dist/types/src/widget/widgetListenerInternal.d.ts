@@ -1,0 +1,30 @@
+import { type MouseDragger } from './mouseDragger';
+import { type TouchDragger } from './touchDragger';
+import { type WidgetEventMap_Internal } from './widgetEvents';
+type EventMap = WidgetEventMap_Internal;
+type EventType = keyof WidgetEventMap_Internal;
+type EventHandler<T, K extends EventType = EventType> = (event: EventMap[K], current: T) => unknown;
+type Targetable = {
+    getElement(): HTMLElement;
+};
+export declare class WidgetListenerInternal {
+    private readonly dispatchCallback;
+    dragTouchEnabled: boolean;
+    private dragTriggerRemover?;
+    private listeners?;
+    mouseDragger?: MouseDragger;
+    touchDragger?: TouchDragger;
+    constructor(dispatchCallback: (type: EventType, event: EventMap[EventType]) => void);
+    destroy(): void;
+    private getListenerSet;
+    add<T extends Targetable, K extends EventType>(type: K, target: T, handler: EventHandler<T, K>): void;
+    remove<T extends Targetable, K extends EventType>(type: K, _target: T, handler: EventHandler<T, K>): void;
+    private registerDragTrigger;
+    private triggerMouseDrag;
+    private startMouseDrag;
+    private endDrag;
+    private triggerTouchDrag;
+    private startOneFingerTouch;
+    dispatch<T extends Targetable, K extends EventType>(type: K, current: T, event: EventMap[K]): void;
+}
+export {};

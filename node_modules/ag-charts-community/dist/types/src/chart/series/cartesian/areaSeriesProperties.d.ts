@@ -1,0 +1,32 @@
+import type { InternalAgColorType } from 'ag-charts-core';
+import type { AgAreaSeriesLabelFormatterParams, AgAreaSeriesMarkerItemStylerParams, AgAreaSeriesOptions, AgAreaSeriesTooltipRendererParams } from 'ag-charts-types';
+import { DropShadow } from '../../../scene/dropShadow';
+import { Label } from '../../label';
+import { SeriesMarker } from '../seriesMarker';
+import { FillGradientDefaults, FillImageDefaults, FillPatternDefaults } from '../seriesProperties';
+import { CartesianSeriesProperties } from './cartesianSeries';
+import { InterpolationProperties } from './interpolationProperties';
+export declare class AreaSeriesProperties extends CartesianSeriesProperties<AgAreaSeriesOptions> {
+    xKey: string;
+    xName?: string;
+    yKey: string;
+    yName?: string;
+    yFilterKey: string | undefined;
+    normalizedTo?: number;
+    fill: InternalAgColorType;
+    readonly fillGradientDefaults: FillGradientDefaults;
+    readonly fillPatternDefaults: FillPatternDefaults;
+    readonly fillImageDefaults: FillImageDefaults;
+    fillOpacity: number;
+    stroke: string;
+    strokeWidth: number;
+    strokeOpacity: number;
+    lineDash: number[];
+    lineDashOffset: number;
+    interpolation: InterpolationProperties;
+    readonly shadow: DropShadow;
+    readonly marker: SeriesMarker<AgAreaSeriesMarkerItemStylerParams<any, unknown>>;
+    readonly label: Label<AgAreaSeriesLabelFormatterParams, any>;
+    readonly tooltip: import("../seriesTooltip").SeriesTooltip<Omit<AgAreaSeriesTooltipRendererParams<any, unknown>, "context">>;
+    connectMissingData: boolean;
+}

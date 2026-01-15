@@ -11,7 +11,11 @@ export default function Rutina() {
   const [routines, setRoutines] = React.useState([]);
   const [mostrar, setMostrar] = React.useState(true);
 
+
+
   const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:5001";
+
+
 
   function generateId() {
     return Math.random().toString(36).slice(2) + Date.now().toString(36);
@@ -23,7 +27,11 @@ export default function Rutina() {
 
   const fetchRoutines = async () => {
     try {
+
+
       const resp = await fetch(`${API_BASE}/routines`);
+
+
       const data = await resp.json();
       if (resp.ok) {
         setRoutines(Array.isArray(data) ? data : []);
@@ -122,7 +130,11 @@ export default function Rutina() {
         })),
       };
 
+
+
       const resp = await fetch(`${API_BASE}/routines`, {
+
+
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(routineData),
@@ -149,7 +161,10 @@ export default function Rutina() {
   const deleteRoutine = async (routine) => {
     if (!window.confirm(`¿Eliminar la rutina "${routine.name}"?`)) return;
     try {
+
+
       const resp = await fetch(`${API_BASE}/routines/${routine.id}`, {
+
         method: "DELETE",
       });
       if (resp.ok) {
