@@ -12,7 +12,9 @@ export default function Rutina() {
   const [mostrar, setMostrar] = React.useState(true);
 
 
+
   const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:5001";
+
 
 
   function generateId() {
@@ -26,7 +28,9 @@ export default function Rutina() {
   const fetchRoutines = async () => {
     try {
 
+
       const resp = await fetch(`${API_BASE}/routines`);
+
 
       const data = await resp.json();
       if (resp.ok) {
@@ -127,7 +131,9 @@ export default function Rutina() {
       };
 
 
+
       const resp = await fetch(`${API_BASE}/routines`, {
+
 
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -155,6 +161,7 @@ export default function Rutina() {
   const deleteRoutine = async (routine) => {
     if (!window.confirm(`¿Eliminar la rutina "${routine.name}"?`)) return;
     try {
+
 
       const resp = await fetch(`${API_BASE}/routines/${routine.id}`, {
 

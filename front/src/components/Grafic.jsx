@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as echarts from "echarts";
 
-const API_BASE = "http://localhost:5001";
+const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:5001";
 function weekRecord(week, year) {
   const simple = new Date(year, 0, 1 + (week - 1) * 7);
   const weekDay = simple.getDay();
