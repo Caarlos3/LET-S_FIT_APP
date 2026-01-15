@@ -1,0 +1,10 @@
+import { type AxisModuleDefinition, type ChartModuleDefinition, type ModuleDefinition, ModuleType, type ModuleTypeSwitch, type PresetModuleDefinition, type SeriesModuleDefinition } from '../interfaces/moduleDefinition';
+export declare function register(definition: ModuleDefinition, version: string): void;
+export declare function registerMany(definitions: ModuleDefinition[], version: string): void;
+export declare function reset(): void;
+export declare function hasModule(moduleName: string): boolean;
+export declare function listModulesByType<T extends ModuleType>(moduleType: T): Generator<ModuleTypeSwitch<T>>;
+export declare function detectChartDefinition(options: object): ChartModuleDefinition<any>;
+export declare function getAxisModule(moduleName: string): AxisModuleDefinition<any> | undefined;
+export declare function getPresetModule(moduleName: string): PresetModuleDefinition<any> | undefined;
+export declare function getSeriesModule(moduleName: string): SeriesModuleDefinition<any> | undefined;

@@ -1,0 +1,3 @@
+import { type ChartModuleDefinition } from 'ag-charts-core';
+import type { AgCartesianChartOptions } from 'ag-charts-types';
+export declare const CartesianChartModule: ChartModuleDefinition<AgCartesianChartOptions>;

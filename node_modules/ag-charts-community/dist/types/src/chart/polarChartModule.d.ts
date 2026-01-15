@@ -1,0 +1,3 @@
+import { type ChartModuleDefinition } from 'ag-charts-core';
+import type { AgPolarChartOptions } from 'ag-charts-types';
+export declare const PolarChartModule: ChartModuleDefinition<AgPolarChartOptions>;

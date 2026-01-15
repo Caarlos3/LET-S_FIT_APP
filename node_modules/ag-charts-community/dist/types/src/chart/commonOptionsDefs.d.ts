@@ -1,0 +1,22 @@
+import { type OptionsDefs, type Validator } from 'ag-charts-core';
+import { type AgBaseSeriesOptions, type AgBaseSeriesThemeableOptions, type AgBaseThemeableChartOptions, type AgChartAutoSizedBaseLabelOptions, type AgChartLabelOptions, type AgDropShadowOptions, type AgErrorBarOptions, type AgErrorBarThemeableOptions, type AgInterpolationType, type AgSeriesMarkerOptions, type AgSeriesTooltip, type ToolbarButton } from 'ag-charts-types';
+export declare const rangeValidator: Validator;
+export declare const textOrSegments: Validator;
+export declare const toolbarButtonOptionsDefs: OptionsDefs<ToolbarButton>;
+export declare const formatObjectValidator: Validator;
+export declare const numberFormatValidator: Validator;
+export declare const commonChartOptionsDefs: OptionsDefs<Omit<AgBaseThemeableChartOptions, 'navigator'>>;
+export declare const commonSeriesThemeableOptionsDefs: OptionsDefs<AgBaseSeriesThemeableOptions<any>>;
+export declare const commonSeriesOptionsDefs: OptionsDefs<AgBaseSeriesOptions<any>>;
+export declare const markerOptionsDefs: OptionsDefs<AgSeriesMarkerOptions<any, any>>;
+type UndocumentedAgChartLabelOptions = {
+    itemStyler?: unknown;
+};
+export declare const seriesLabelOptionsDefs: OptionsDefs<AgChartLabelOptions<any, any> & UndocumentedAgChartLabelOptions>;
+export declare const autoSizedLabelOptionsDefs: OptionsDefs<AgChartAutoSizedBaseLabelOptions<any, any>>;
+export declare const errorBarThemeableOptionsDefs: OptionsDefs<AgErrorBarThemeableOptions>;
+export declare const errorBarOptionsDefs: OptionsDefs<AgErrorBarOptions<any>>;
+export declare const tooltipOptionsDefs: OptionsDefs<AgSeriesTooltip<any>>;
+export declare const shadowOptionsDefs: OptionsDefs<AgDropShadowOptions>;
+export declare const interpolationOptionsDefs: OptionsDefs<AgInterpolationType>;
+export {};

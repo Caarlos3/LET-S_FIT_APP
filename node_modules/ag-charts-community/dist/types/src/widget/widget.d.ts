@@ -1,0 +1,83 @@
+import { type BaseAttributeTypeMap, type BaseStyleTypeMap, type BoxBounds, type ElementID } from 'ag-charts-core';
+import { type WidgetEventMap } from './widgetEvents';
+import { WidgetListenerHTML } from './widgetListenerHTML';
+import { WidgetListenerInternal } from './widgetListenerInternal';
+type EventMap = WidgetEventMap;
+type EventType = keyof WidgetEventMap;
+interface IWidget<TElement extends HTMLElement> {
+    index: number;
+    domIndex?: number;
+    parent?: Widget;
+    destroy(): void;
+    getElement(): TElement;
+}
+export type BeforeWidget<T extends IWidget<HTMLElement>> = T & {
+    domIndex: number;
+};
+declare abstract class WidgetBounds<TElement extends HTMLElement> {
+    protected readonly elem: TElement;
+    protected elemContainer?: HTMLDivElement;
+    constructor(elem: TElement);
+    setBounds(bounds: Partial<BoxBounds>): void;
+    getBounds(): BoxBounds;
+    protected static setElementContainer(widget: WidgetBounds<HTMLElement>, elemContainer: HTMLDivElement): void;
+}
+export declare abstract class Widget<TElement extends HTMLElement = HTMLElement, TChildWidget extends IWidget<HTMLElement> = IWidget<HTMLElement>> extends WidgetBounds<TElement> implements IWidget<TElement> {
+    index: number;
+    domIndex?: number;
+    parent?: Widget;
+    protected readonly children: TChildWidget[];
+    protected htmlListener?: WidgetListenerHTML;
+    protected internalListener?: WidgetListenerInternal;
+    destroyListener?: () => void;
+    protected abstract destructor(): void;
+    set id(elementId: ElementID | undefined);
+    get id(): ElementID | undefined;
+    getElement(): TElement;
+    getBoundingClientRect(): DOMRect;
+    get clientWidth(): number;
+    get clientHeight(): number;
+    destroy(): void;
+    remove(): void;
+    setHidden(hidden: boolean): void;
+    isHidden(): boolean;
+    setCursor(cursor: BaseStyleTypeMap['cursor'] | undefined): void;
+    setTextContent(textContent: string | undefined): void;
+    setAriaDescribedBy(ariaDescribedBy: BaseAttributeTypeMap['aria-describedby'] | undefined): void;
+    setAriaHidden(ariaHidden: BaseAttributeTypeMap['aria-hidden'] | undefined): void;
+    setAriaLabel(ariaLabel: BaseAttributeTypeMap['aria-label'] | undefined): void;
+    setAriaExpanded(ariaExpanded: BaseAttributeTypeMap['aria-expanded'] | undefined): void;
+    setAriaControls(ariaControls: BaseAttributeTypeMap['aria-controls'] | undefined): void;
+    setAriaHasPopup(ariaHasPopup: BaseAttributeTypeMap['aria-haspopup'] | undefined): void;
+    setInnerHTML(html: string): void;
+    setPointerEvents(pointerEvents: BaseStyleTypeMap['pointer-events'] | undefined): void;
+    isDisabled(): boolean;
+    hasPopup(): boolean;
+    private parseFloat;
+    cssLeft(): number;
+    cssTop(): number;
+    cssWidth(): number;
+    cssHeight(): number;
+    focus(opts?: Parameters<HTMLElement['focus']>[0]): void;
+    setFocusOverride(focus: boolean | undefined): void;
+    setPreventsDefault(preventDefault: boolean): void;
+    setTabIndex(tabIndex: BaseAttributeTypeMap['tabindex']): void;
+    addChild(child: TChildWidget): void;
+    removeChild(child: TChildWidget): void;
+    moveChild(child: TChildWidget, domIndex: number): void;
+    addClass(...tokens: string[]): void;
+    removeClass(...tokens: string[]): void;
+    toggleClass(token: string, force?: boolean): void;
+    protected appendOrInsert(child: HTMLElement, before: TChildWidget | undefined): void;
+    protected addChildToDOM(child: TChildWidget, before: TChildWidget | undefined): void;
+    protected removeChildFromDOM(child: TChildWidget): void;
+    protected onChildAdded(_child: TChildWidget): void;
+    protected onChildRemoved(_child: TChildWidget): void;
+    private getBefore;
+    addListener<K extends EventType>(type: K, listener: (ev: EventMap[K], current: typeof this) => unknown): () => void;
+    removeListener<K extends EventType>(type: K, listener: (ev: EventMap[K], current: typeof this) => unknown): void;
+    setDragTouchEnabled(dragTouchEnabled: boolean): void;
+    private onDispatch;
+    static addWindowEvent(_type: 'page-left', listener: () => unknown): () => void;
+}
+export {};
