@@ -31,7 +31,7 @@ test('al montar el componente, hace fetch a la API y muestra que no hay rutinas'
 });
 
 
-test('si el nombre de la rutina esta vacio, muestra un error', async () => {
+test('si el nombre de la rutina esta vacio, muestra un error y no hace POST', async () => {
 
     mockFetchJson([]);
     render(<Rutina />);
@@ -39,7 +39,7 @@ test('si el nombre de la rutina esta vacio, muestra un error', async () => {
     const botonGuardar = screen.getByRole('button', { name: /Guardar Rutina/i });
     fireEvent.click(botonGuardar);
 
-    const mensajeError = await screen.findByText(/El nombre de la rutina no puede estar vacío/i);
+    const mensajeError = await screen.findByText(/El nombre de la rutina es requerido/i);
     expect(mensajeError).toBeInTheDocument();
 
     expect(global.fetch).toHaveBeenCalledTimes(1);
