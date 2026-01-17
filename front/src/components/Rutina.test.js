@@ -1,5 +1,5 @@
 
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import Rutina from './Rutina';
 
 function mockFetchJson(data, ok = true) {
@@ -28,4 +28,20 @@ test('al montar el componente, hace fetch a la API y muestra que no hay rutinas'
 
     const mensajeVacio = screen.getByText(/No hay rutinas guardadas/i);
     expect(mensajeVacio).toBeInTheDocument();
+});
+
+
+test('si el nombre de la rutina esta vacio, muestra un error', async () => {
+
+    mockFetchJson([]);
+    render(<Rutina />);
+
+    const botonGuardar = screen.getByRole('button', { name: /Guardar Rutina/i });
+    fireEvent.click(botonGuardar);
+
+    const mensajeError = await screen.findByText(/El nombre de la rutina no puede estar vacío/i);
+    expect(mensajeError).toBeInTheDocument();
+
+    expect(global.fetch).toHaveBeenCalledTimes(1);
+
 });
